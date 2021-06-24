@@ -2,15 +2,13 @@
   apt: update_cache=yes force_apt_get=yes cache_valid_time=3600
   become: true
 
-
-
-- name: MongoDB - Import public key
-  # ansible.builtin.apt_key:
+- name: 'MongoDB - Import public key'
   apt_key:
     url: https://www.mongodb.org/static/pgp/server-4.4.asc
     state: present
   become: true
-- name: MongoDB - Add repository
+
+- name: 'MongoDB - Add repository'
   apt_repository:
     filename: '/etc/apt/sources.list.d/mongodb-org-4.4'
     repo: 'deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu focal/mongodb-org/4.4 multiverse'
@@ -25,12 +23,9 @@
     name: "{{ item }}"
   loop:
     - 'mongodb-org'
-      #    - 'mongodb-org-mongos'
-      #    - 'mongodb-org-server'
-      #  - 'mongodb-database-tools'  
   become: true
 
-- name: MongoDB - Running state
+- name: 'MongoDB - Running state'
   service:
     name: mongod
     state: started
