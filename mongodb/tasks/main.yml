@@ -24,7 +24,13 @@
   loop:
     - 'mongodb-org'
   become: true
-
+  
+- name: 'MongoDB - copy config file'
+  template: "src=../templates/mongod.conf dest=/etc/mongod.conf"
+  become: true
+  notify:
+    - restart mongod     
+          
 - name: 'MongoDB - Running state'
   service:
     name: mongod
