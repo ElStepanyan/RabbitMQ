@@ -1,5 +1,5 @@
 ---
 # handlers file for mongodb
-- name: restart nginx
+- name: restart mongodb
   service: name=mongod state=restarted
   become: true
