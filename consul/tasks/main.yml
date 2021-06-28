@@ -1,0 +1,36 @@
+---
+# tasks file for consul
+- name: 'Update apt-get repo and cache'
+  apt: update_cache=yes force_apt_get=yes cache_valid_time=3600
+  become: true
+
+- name: add consul apt-key
+  apt_key: 
+    url: https://apt.releases.hashicorp.com/gpg 
+    state: present 
+  become: true
+ 
+- name: add consul apt repository
+  apt_repository: 
+    repo: 'deb [arch=amd64] https://apt.releases.hashicorp.com focal main' 
+    state: present 
+    filename: '/etc/apt/sources.list'
+  become: true
+
+- name: install consul
+  apt: 
+    name: consul
+    state: present
+    update_cache: yes
+  become: true
+
+- name: Enable consul service
+  systemd:
+    service: consul.service
+    enabled: true
+  notify: Restart consul
+  become: true
+
+
+
+
